@@ -119,6 +119,7 @@
      <Compile Include="Assets\HTC.UnityPlugin\ViveInputUtility\Scripts\ViveRole\DeviceRole.cs" />
      <Compile Include="Assets\HTC.UnityPlugin\ViveInputUtility\Scripts\ViveRole\HandRole.cs" />
      <Compile Include="Assets\HTC.UnityPlugin\ViveInputUtility\Scripts\ViveRole\ViveRole.cs" />
+     <Compile Include="Assets\Scripts\MuteUnMuteController.cs" />
      <Compile Include="Assets\Scripts\RadioController.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />

@@ -10,6 +10,14 @@ public class GravitySwitch : MonoBehaviour
     public bool gravityEnabled = false;
     public Vector3 impalse = Vector3.up;
 
+	public GameObject alpStuff;
+	public GameObject spaceStuff;
+	public Light envLight;
+	private float originalIntensity;
+
+	public GameObject alpSound;
+	public GameObject spaceSound;
+
     private bool m_gravityEnabled;
     private Vector3 previousGravity;
 
@@ -26,20 +34,30 @@ public class GravitySwitch : MonoBehaviour
             if (value)
             {
                 Physics.gravity = previousGravity;
+				envLight.intensity = originalIntensity;
             }
             else
             {
                 previousGravity = Physics.gravity;
+				envLight.intensity = 0.2f;
 
                 StartCoroutine(DisableGravity());
             }
         }
 
         gravityEnabled = m_gravityEnabled;
+
+		alpStuff.SetActive (gravityEnabled);
+		spaceStuff.SetActive (!gravityEnabled);
+
+		alpSound.GetComponent<AudioSource> ().mute = !gravityEnabled;
+		spaceSound.GetComponent<AudioSource> ().mute = gravityEnabled;
     }
 
     private void Start()
     {
+		originalIntensity = envLight.intensity;
+
         previousGravity = Physics.gravity;
         SetGravityEnabled(gravityEnabled, true);
     }

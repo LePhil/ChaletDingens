@@ -4,24 +4,47 @@ using UnityEngine;
 
 public class RadioController : MonoBehaviour {
 
-	private AudioClip clip;
 
-	void Start () {
-		string bbc = "http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_med/llnw/bbc_radio_one.m3u8";
-		string srf = "http://stream.srg-ssr.ch/drs3/aacp_96.m3u";
-		string ogg = "http://stream.radioreklama.bg/city_low.ogg";
+	private AudioSource _audioSource;
 
-		WWW liveStream = new WWW (ogg);  // start a download of the given URL
-		clip = liveStream.GetAudioClip(false, true); // 2D, streaming
+	private string _audioURL = "http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav";
+	//private string _audioURL = "file:///Users/yourNameHere/Dropbox/filename.wav";
 
-		AudioSource source = GetComponent<AudioSource> ();
-		source.clip = clip;
-		source.Play ();
-		Debug.Log(clip);
+	//
+	public void Start()
+	{
+		_audioSource = GetComponent<AudioSource>();
+		if (_audioSource == null)
+		{
+			Debug.Log("No AudioSource component found!");
+		}
+		else
+		{
+			if (_audioSource.clip != null)
+			{
+				_audioSource.Play();
+			}
+
+			StartCoroutine(LoadAudioClip(_audioURL));
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		//audio.Play();
+
+	//
+	private IEnumerator LoadAudioClip(string audioURL)
+	{
+		Debug.Log("Loading clip from WWW");
+
+		var audioLoader = new WWW(audioURL);
+		var clip = audioLoader.audioClip;
+
+		yield return new WaitUntil(() => clip.loadState.Equals(AudioDataLoadState.Loaded));
+
+		if (clip.loadState.Equals(AudioDataLoadState.Loaded))
+		{
+			_audioSource.clip = audioLoader.GetAudioClip(false, false);
+
+			Debug.Log("Playing clip...");
+			_audioSource.Play();
+		}
 	}
 }
