@@ -22,7 +22,7 @@ public class MuteUnMuteController : MonoBehaviour
 	public Vector3 buttonDownDisplacement;
 
 	private Vector3 buttonOriginPosition;
-	private bool radioIsMuted = false;
+	private bool radioIsMuted = true;
 
 	private HashSet<ColliderButtonEventData> pressingEvents = new HashSet<ColliderButtonEventData>();
 
